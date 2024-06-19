@@ -62,8 +62,8 @@ const handleVolume = () => {
 </script>
 
 <template>
-  <div class="mx-auto py-20 max-w-6xl">
-    <div class="rounded-xl mb-10 mx-12 p-6 bg-gray-50 flex justify-between items-center">
+  <div class="mx-auto md:py-20 py-6 max-w-6xl">
+    <div class="rounded-xl mb-10 md:mx-12 mx-3 p-6 bg-gray-50 flex justify-between items-center">
       <div class="group block flex-shrink-0">
         <div class="flex items-center">
           <div>
@@ -82,7 +82,7 @@ const handleVolume = () => {
         <span>
           <IconPlayStreamBoldDuotone class="text-2xl text-red-400" />
         </span>
-        <p class="text-sm font-bold">
+        <p class="text-sm font-bold hidden md:block">
           8 Players joined
         </p>
 
@@ -94,7 +94,7 @@ const handleVolume = () => {
     </div>
 
 
-    <draggable v-model="draggableList" class="flex gap-8 items-center justify-center" :component-data="{
+    <draggable v-model="draggableList" class="flex md:gap-8 gap-4 items-center justify-center" :component-data="{
       tag: 'div',
       type: 'transition-group',
       name: !drag ? 'flip-list' : null,

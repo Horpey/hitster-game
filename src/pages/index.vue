@@ -1,5 +1,7 @@
 <script lang="ts" setup>
 import IconPlayStreamBoldDuotone from 'virtual:icons/solar/play-stream-bold-duotone'
+import IconPauseCircleBoldDuotone from 'virtual:icons/solar/pause-circle-bold-duotone'
+import IconVolumeCrossBoldDuotine from 'virtual:icons/solar/volume-cross-bold-duotone'
 import { Music } from '~/types/App';
 import database from '~/data/database';
 import draggable from 'vuedraggable'
@@ -9,7 +11,7 @@ const musicList = ref<Music[]>([
   { "title": "Like a Rolling Stone", "artist": "Bob Dylan", "year": 1965 },
   { "title": "Good Vibrations", "artist": "The Beach Boys", "year": 1966 },
 ])
-const timer = ref('00:00')
+
 
 const { playlist } = database
 const drag = ref(false)
@@ -64,26 +66,19 @@ onMounted(() => {
       </div>
 
       <div class="flex items-center gap-3">
-        <button>
+        <span>
           <IconPlayStreamBoldDuotone class="text-2xl text-red-400" />
-        </button>
+        </span>
         <p class="text-sm font-bold">
           8 Players joined
         </p>
 
-
-
         <button type="button"
           class="rounded bg-red-600 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">
-          <span id="timer">
-            {{ timer }}
-          </span>
           Complete
         </button>
       </div>
-
     </div>
-
 
 
     <draggable v-model="draggableList" class="flex gap-8 items-center justify-center" :component-data="{
@@ -98,8 +93,18 @@ onMounted(() => {
       </template>
     </draggable>
 
-    <div class="mt-10 p-6 rounded-full bg-gray-50 flex justify-between items-center mx-auto max-w-[18rem]">
-      <p>Player</p>
+    <div class="mt-10 p-3 rounded-full bg-red-500 flex justify-between items-center mx-auto max-w-[18rem] gap-3">
+      <button disabled class="disabled:opacity-70">
+        <IconPauseCircleBoldDuotone class="text-white text-3xl" aria-hidden="true" />
+      </button>
+
+      <div>
+        <span class="w-full h-2 block rounded-lg bg-white" />
+      </div>
+
+      <button>
+        <IconVolumeCrossBoldDuotine class="text-white text-3xl" aria-hidden="true" />
+      </button>
     </div>
 
   </div>

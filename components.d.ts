@@ -8,6 +8,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     MusicCard: typeof import('./src/components/MusicCard.vue')['default']
+    MusicControl: typeof import('./src/components/MusicControl.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     TheCounter: typeof import('./src/components/TheCounter.vue')['default']

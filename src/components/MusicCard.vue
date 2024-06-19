@@ -3,7 +3,7 @@ import IconMusicNoteBoldDuotone from 'virtual:icons/solar/music-note-bold-duoton
 import { Music } from '~/types/App';
 
 interface Props {
-  isHidden: boolean
+  isHidden?: boolean
   music?: Music
 }
 

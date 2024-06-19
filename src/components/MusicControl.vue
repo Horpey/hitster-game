@@ -42,11 +42,12 @@ const handleVolume = () => {
 </script>
 
 <template>
-  <iframe ref="player" width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
+  <iframe class="sr-only" ref="player" width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
     src=" https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/293&amp&show_artwork=false">
   </iframe>
 
-  <div class="mt-10 p-3 rounded-full bg-red-500 flex justify-between items-center mx-auto max-w-[8rem] gap-3">
+  <div v-if="player"
+    class="mt-10 p-3 rounded-full bg-red-500 flex justify-between items-center mx-auto max-w-[8rem] gap-3">
     <button type="button" @click="handeleMusicPlay" class="disabled:opacity-70">
       <IconPauseCircleBoldDuotone v-if="isPlaying" class="text-white text-3xl" aria-hidden="true" />
       <IconPlayCircleBoldDuotone v-else class="text-white text-3xl" aria-hidden="true" />

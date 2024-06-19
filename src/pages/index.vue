@@ -2,6 +2,7 @@
 import IconPlayStreamBoldDuotone from 'virtual:icons/solar/play-stream-bold-duotone'
 import IconPauseCircleBoldDuotone from 'virtual:icons/solar/pause-circle-bold-duotone'
 import IconVolumeCrossBoldDuotine from 'virtual:icons/solar/volume-cross-bold-duotone'
+import IconVolumeLoudBoldDuotine from 'virtual:icons/solar/volume-loud-bold-duotone'
 import { Music } from '~/types/App';
 import database from '~/data/database';
 import draggable from 'vuedraggable'
@@ -14,7 +15,10 @@ const musicList = ref<Music[]>([
 
 
 const { playlist } = database
+const loud = ref(false)
 const drag = ref(false)
+const playerLength = ref(75)
+
 const dragOptions = computed(() => {
   return {
     animation: 200,
@@ -45,7 +49,16 @@ onMounted(() => {
     randomMusic.value,
     ...musicList.value
   ]
+  handeleMusicPlay()
 })
+
+const handeleMusicPlay = () => {
+
+}
+
+const handleVolume = () => {
+  loud.value = !loud.value
+}
 </script>
 
 <template>
@@ -94,16 +107,20 @@ onMounted(() => {
     </draggable>
 
     <div class="mt-10 p-3 rounded-full bg-red-500 flex justify-between items-center mx-auto max-w-[18rem] gap-3">
-      <button disabled class="disabled:opacity-70">
+      <button type="button" disabled class="disabled:opacity-70">
         <IconPauseCircleBoldDuotone class="text-white text-3xl" aria-hidden="true" />
       </button>
 
-      <div>
-        <span class="w-full h-2 block rounded-lg bg-white" />
+      <div class="relative flex w-full">
+        <span class="h-1 block rounded-lg absolute left-0 bg-white" :style="{
+          width: `${playerLength}%`
+        }" />
+        <span class="w-full h-1 block rounded-lg bg-white/30" />
       </div>
 
-      <button>
-        <IconVolumeCrossBoldDuotine class="text-white text-3xl" aria-hidden="true" />
+      <button type="button" @click="handleVolume">
+        <IconVolumeLoudBoldDuotine v-if="loud" class="text-white text-3xl" aria-hidden="true" />
+        <IconVolumeCrossBoldDuotine v-else class="text-white text-3xl" aria-hidden="true" />
       </button>
     </div>
 

@@ -11,22 +11,44 @@ const loud = ref(false)
 const player = ref<HtmlHTMLAttributes>()
 const isPlaying = ref(false)
 
+const { timer, draggableList } = useMusic()
+
+
 onMounted(() => {
   if (player.value) {
     widget.value = SC.Widget(player.value);
   }
 })
 
+const initiateTimer = () => {
+  timer.value = '00:15'
+  let count = 15
+  const interval = setInterval(() => {
+    count--
+    timer.value = `00:${count}`
+    if (count === 0) {
+      clearInterval(interval)
+      draggableList.value = draggableList.value.map(item => {
+        if (item.random) {
+          item.hidden = false
+        }
+        return item
+      })
+
+      let widget = SC.Widget(player.value);
+      widget.pause()
+    }
+  }, 1500)
+}
+
 const handeleMusicPlay = () => {
-  isPlaying.value = !isPlaying.value
+  isPlaying.value = true
 
   if (player.value) {
     let widget = SC.Widget(player.value);
-    widget.toggle()
+    widget.play()
+    initiateTimer()
   }
-
-  // const audio = new Audio('https://assets.coderrocketfuel.com/pomodoro-times-up.mp3')
-  // audio.play()
 }
 
 const handleVolume = () => {
@@ -36,19 +58,17 @@ const handleVolume = () => {
     let widget = SC.Widget(player.value);
     widget.setVolume(loud.value ? 0 : 100)
   }
-
-
 }
 </script>
 
 <template>
   <iframe class="sr-only" ref="player" width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
-    src=" https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/293&amp&show_artwork=false">
+    src=" https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1707945366&color=%23ff5500">
   </iframe>
 
   <div v-if="player"
     class="mt-10 p-3 rounded-full bg-red-500 flex justify-between items-center mx-auto max-w-[8rem] gap-3">
-    <button type="button" @click="handeleMusicPlay" class="disabled:opacity-70">
+    <button :disabled="isPlaying" type="button" @click="handeleMusicPlay" class="disabled:opacity-70">
       <IconPauseCircleBoldDuotone v-if="isPlaying" class="text-white text-3xl" aria-hidden="true" />
       <IconPlayCircleBoldDuotone v-else class="text-white text-3xl" aria-hidden="true" />
     </button>
@@ -61,8 +81,8 @@ const handleVolume = () => {
     </div> -->
 
     <button type="button" @click="handleVolume">
-      <IconVolumeLoudBoldDuotine v-if="loud" class="text-white text-3xl" aria-hidden="true" />
-      <IconVolumeCrossBoldDuotine v-else class="text-white text-3xl" aria-hidden="true" />
+      <IconVolumeCrossBoldDuotine v-if="loud" class="text-white text-3xl" aria-hidden="true" />
+      <IconVolumeLoudBoldDuotine v-else class="text-white text-3xl" aria-hidden="true" />
     </button>
   </div>
 </template>

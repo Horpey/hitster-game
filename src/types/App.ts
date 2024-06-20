@@ -3,4 +3,5 @@ export interface Music {
   year: number
   artist: string
   hidden?: boolean
+  random?: boolean
 }

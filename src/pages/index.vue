@@ -1,17 +1,12 @@
 <script lang="ts" setup>
 import IconPlayStreamBoldDuotone from 'virtual:icons/solar/play-stream-bold-duotone'
-import { Music } from '~/types/App';
-import database from '~/data/database';
 import draggable from 'vuedraggable'
+import { useMusic } from '~/composables/useMusic'
+import { Music } from '~/types/App';
 
-const musicList = ref<Music[]>([
-  { "title": "Johnny B. Goode", "artist": "Chuck Berry", "year": 1958 },
-  { "title": "Like a Rolling Stone", "artist": "Bob Dylan", "year": 1965 },
-  { "title": "Good Vibrations", "artist": "The Beach Boys", "year": 1966 },
-])
+const { timer, musicList, randomMusic, draggableList } = useMusic()
 
 
-const { playlist } = database
 const drag = ref(false)
 
 const dragOptions = computed(() => {
@@ -24,30 +19,13 @@ const dragOptions = computed(() => {
 })
 
 
-const randomMusic = computed(() => {
-  const filteredMusic = playlist.filter(item =>
-    !musicList.value.some(excluded =>
-      excluded.title === item.title && excluded.artist === item.artist && excluded.year === item.year
-    )
-  );
-
-  const randomIndex = Math.floor(Math.random() * filteredMusic.length);
-  let randomMusicItem = filteredMusic[randomIndex]
-  randomMusicItem.hidden = true
-  return randomMusicItem
-})
-
-const draggableList = ref<Music[]>([])
 
 onMounted(() => {
   draggableList.value = [
     randomMusic.value,
     ...musicList.value
   ]
-
 })
-
-
 </script>
 
 <template>
@@ -75,9 +53,9 @@ onMounted(() => {
           8 Players joined
         </p>
 
-        <button type="button"
+        <button type="button" disabled
           class="rounded-xl bg-red-600 px-3 py-2 text-xs font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">
-          Complete
+          {{ timer }}
         </button>
       </div>
     </div>

@@ -85,4 +85,7 @@ const handleVolume = () => {
       <IconVolumeLoudBoldDuotine v-else class="text-white text-3xl" aria-hidden="true" />
     </button>
   </div>
+  <p class="text-xs text-center mt-4 text-gray-400">
+    Click on the play button to start the music
+  </p>
 </template>
